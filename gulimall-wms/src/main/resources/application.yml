@@ -9,4 +9,4 @@ mybatis-plus:
   mapper-locations: classpath:/mapper/wms/*.xml
 
 server:
-  port: 130000
+  port: 13000
