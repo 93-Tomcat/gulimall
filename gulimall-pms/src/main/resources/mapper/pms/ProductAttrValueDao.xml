@@ -14,5 +14,18 @@
         <result property="quickShow" column="quick_show"/>
     </resultMap>
 
+    <!--void insertBatch(ArrayList<ProductAttrValueEntity> allSave);-->
+    <insert id="insertBath">
+        INSERT INTO `pms_product_attr_value`
+            (spu_id,attr_id,attr_name,attr_value,attr_sort,quick_show)
+        WHERE
+        <foreach collection="naseAttrs" item="attr" separator=",">
+            (
+            #{attr.spuId},#{attr.attrId},#{attr.attrName},
+            #{attr.attrValue},#{attr.attrSort},#{attr.quickShow}
+            )
+        </foreach>
 
+
+    </insert>
 </mapper>

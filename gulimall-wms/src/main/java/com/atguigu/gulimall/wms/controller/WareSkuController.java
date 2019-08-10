@@ -1,14 +1,17 @@
 package com.atguigu.gulimall.wms.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +33,20 @@ import com.atguigu.gulimall.wms.service.WareSkuService;
 @RestController
 @RequestMapping("wms/waresku")
 public class WareSkuController {
+
     @Autowired
     private WareSkuService wareSkuService;
+
+    @GetMapping("/sku/{skuId}")
+    public Resp<List<WareSkuEntity>> skuWareInfos(
+
+            @PathVariable("skuId")Long skuId){
+
+        List<WareSkuEntity> list = wareSkuService.list(new QueryWrapper<WareSkuEntity>().eq("sku_id", skuId));
+
+        return Resp.ok(list);
+    }
+
 
     /**
      * 列表

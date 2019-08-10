@@ -9,5 +9,9 @@
         <result property="decript" column="decript"/>
     </resultMap>
 
+    <insert id="insertInfo">
+        INSERT INTO `pms_spu_info_desc`(spu_id,decript)
+        VALUES (#{entity.spuId},#{entity.decript})
+    </insert>
 
 </mapper>

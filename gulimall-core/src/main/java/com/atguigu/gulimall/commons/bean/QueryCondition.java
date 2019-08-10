@@ -2,6 +2,7 @@ package com.atguigu.gulimall.commons.bean;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
 
@@ -24,4 +25,7 @@ public class QueryCondition {
 
     @ApiModelProperty(name = "asc",value = "系统默认排序",required = false)
     private String asc = "asc";
+
+    @ApiModelProperty(name = "key", value = "检索条件", required = false)
+    private String key = "";
 }

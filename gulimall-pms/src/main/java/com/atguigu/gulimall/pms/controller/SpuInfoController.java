@@ -10,6 +10,7 @@ import com.atguigu.gulimall.commons.bean.Resp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +31,21 @@ import com.atguigu.gulimall.pms.service.SpuInfoService;
 @RestController
 @RequestMapping("pms/spuinfo")
 public class SpuInfoController {
+
     @Autowired
     private SpuInfoService spuInfoService;
+
+    @GetMapping("/simple/search")
+    public Resp<Object> querySpuInfoPage(
+
+            QueryCondition queryCondition,
+            @RequestParam(value = "catId",defaultValue = "0")Long catId){
+
+        PageVo page = spuInfoService.queryPageByCatId(queryCondition,catId);
+
+        return Resp.ok(page);
+    }
+
 
     /**
      * 列表

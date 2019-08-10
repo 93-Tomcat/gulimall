@@ -1,6 +1,5 @@
-package com.atguigu.gulimall.pms.config;
+package com.atguigu.gulimall.sms.config;
 
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.zaxxer.hikari.HikariDataSource;
 import io.seata.rm.datasource.DataSourceProxy;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,15 +11,7 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 
 @Configuration
-public class PmsMyBatisConfig {
-
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        // paginationInterceptor.setLimit(你的最大单页限制数量，默认 500 条，小于 0 如 -1 不受限制);
-        return paginationInterceptor;
-    }
-
+public class SmsGlobalTransactionConfig {
 
     @ConfigurationProperties(prefix = "spring.datasource")
     @Bean
@@ -30,10 +21,6 @@ public class PmsMyBatisConfig {
         return hikariDataSource;
     }
 
-    /**
-     * spring里面默认的数据源必须是seata包装了的
-     * @return
-     */
     @Bean
     @Primary//这个返回的数据源是主要的数据源
     public DataSource dataSource(DataSource dataSource){
@@ -41,6 +28,4 @@ public class PmsMyBatisConfig {
         return new DataSourceProxy(dataSource);
 
     }
-
-
 }
