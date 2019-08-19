@@ -17,4 +17,31 @@
     </resultMap>
 
 
+    <!--   我们要为自定义的类型编写结果集映射 -->
+    <resultMap type="com.atguigu.gulimall.pms.vo.CategoryWithChildrensVo" id="categoryWithChildrenVo">
+        <result property="catId" column="cat_id"/>
+        <result property="name" column="name"/>
+        <result property="parentCid" column="parent_cid"/>
+        <result property="catLevel" column="cat_level"/>
+        <result property="showStatus" column="show_status"/>
+        <result property="sort" column="sort"/>
+        <result property="icon" column="icon"/>
+        <result property="productUnit" column="product_unit"/>
+        <result property="productCount" column="product_count"/>
+        <!--        subs   select：调用一个查询去做事-->
+        <collection property="subs" select="selectCategoryChildrenWithChildrens" column="cat_id">
+        </collection>
+    </resultMap>
+
+    <!--List<CategoryWithChildrensVo> selectCategoryChildrenWithChildrens(Integer id);-->
+
+    <!-- mybatis支持的无限极递归查询-->
+    <!--   查询某个分类的子分类 -->
+    <select id="selectCategoryChildrenWithChildrens" resultMap="categoryWithChildrenVo">
+        SELECT * FROM `pms_category` WHERE parent_cid=#{id}
+    </select>
+
+
+
+
 </mapper>

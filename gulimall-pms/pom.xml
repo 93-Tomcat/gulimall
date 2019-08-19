@@ -27,16 +27,8 @@
             <groupId>com.atguigu</groupId>
             <artifactId>gulimall-core</artifactId>
             <version>1.0-SNAPSHOT</version>
-
-
-            <exclusions>
-
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
+
 
 
         <dependency>
@@ -58,6 +50,11 @@
             <version>3.5.0</version>
         </dependency>
 
+        <!--        导入aop场景启动器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

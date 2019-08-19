@@ -7,6 +7,12 @@ import java.util.Map;
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.commons.exception.EmailExistException;
+import com.atguigu.gulimall.commons.exception.PhoneExistException;
+import com.atguigu.gulimall.commons.exception.UsernameExistException;
+import com.atguigu.gulimall.ums.vo.MemberLoginVo;
+import com.atguigu.gulimall.ums.vo.MemberRegistVo;
+import com.atguigu.gulimall.ums.vo.MemberRespVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.atguigu.gulimall.ums.entity.MemberEntity;
 import com.atguigu.gulimall.ums.service.MemberService;
-
-
 
 
 /**
@@ -32,6 +36,34 @@ import com.atguigu.gulimall.ums.service.MemberService;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
+    @ApiOperation("用户登录")
+    @PostMapping("/login")
+    public Resp<Object> login(MemberLoginVo vo){
+
+        MemberRespVo respVo = memberService.login(vo);
+
+        return Resp.ok(respVo);
+    }
+
+
+    @ApiOperation("用户注册")
+    @PostMapping("/regist")
+    public Resp<Object> register(MemberRegistVo vo) {
+
+        Resp<Object> fail = Resp.fail(null);
+
+        try {
+            memberService.registerUser(vo);
+        } catch (Exception e){
+            fail.setMsg(e.getMessage());
+            return fail;
+        }
+
+
+        return Resp.ok(null);
+    }
+
 
     /**
      * 列表
@@ -52,8 +84,8 @@ public class MemberController {
     @ApiOperation("详情查询")
     @GetMapping("/info/{id}")
     @PreAuthorize("hasAuthority('ums:member:info')")
-    public Resp<MemberEntity> info(@PathVariable("id") Long id){
-		MemberEntity member = memberService.getById(id);
+    public Resp<MemberEntity> info(@PathVariable("id") Long id) {
+        MemberEntity member = memberService.getById(id);
 
         return Resp.ok(member);
     }
@@ -64,8 +96,8 @@ public class MemberController {
     @ApiOperation("保存")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('ums:member:save')")
-    public Resp<Object> save(@RequestBody MemberEntity member){
-		memberService.save(member);
+    public Resp<Object> save(@RequestBody MemberEntity member) {
+        memberService.save(member);
 
         return Resp.ok(null);
     }
@@ -76,8 +108,8 @@ public class MemberController {
     @ApiOperation("修改")
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('ums:member:update')")
-    public Resp<Object> update(@RequestBody MemberEntity member){
-		memberService.updateById(member);
+    public Resp<Object> update(@RequestBody MemberEntity member) {
+        memberService.updateById(member);
 
         return Resp.ok(null);
     }
@@ -88,8 +120,8 @@ public class MemberController {
     @ApiOperation("删除")
     @PostMapping("/delete")
     @PreAuthorize("hasAuthority('ums:member:delete')")
-    public Resp<Object> delete(@RequestBody Long[] ids){
-		memberService.removeByIds(Arrays.asList(ids));
+    public Resp<Object> delete(@RequestBody Long[] ids) {
+        memberService.removeByIds(Arrays.asList(ids));
 
         return Resp.ok(null);
     }

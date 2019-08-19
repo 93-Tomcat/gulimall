@@ -53,6 +53,10 @@ public class GulimallGatewayApplication {
 
     只要满足Predicate指定的条件。就将请求Route到指定地方，
 可以使用Filter来对请求产生一些定制的变化；
+    - GatewayFilterFactory:旗下的所有是配置路由规则上具体路由某些请求才过滤
+    
+    - GlobalFilter：旗下的都是具有全局过滤功能的；
+    org.springframework.cloud.gateway.filter
 
 ```yaml
 示例

@@ -8,6 +8,7 @@ import java.util.Map;
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.commons.to.SkuInfoVo;
 import com.atguigu.gulimall.pms.service.SpuInfoService;
 import com.atguigu.gulimall.pms.vo.SpuAllSaveVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -40,8 +41,13 @@ public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
 
-    @Autowired
-    private SpuInfoService spuInfoService;
+    @GetMapping("/cart/{skuId}")
+    public Resp<SkuInfoVo> getSkuInfoForCart(
+            @PathVariable("skuId") Long skuId){
+
+        SkuInfoVo vo = skuInfoService.getSkuVo(skuId);
+        return Resp.ok(vo);
+    }
 
     @ApiOperation("根据商品的id(spuId)查出所有的sku信息")
     @GetMapping("/list/spu/{spuId}")
@@ -87,11 +93,9 @@ public class SkuInfoController {
     @ApiOperation("保存")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('pms:skuinfo:save')")
-    public Resp<Object> save(@RequestBody SpuAllSaveVo spuInfo){
-		//skuInfoService.save(skuInfo);
+    public Resp<Object> save(@RequestBody SkuInfoEntity skuInfo){
+        skuInfoService.save(skuInfo);
 
-        //数据存储到数据库  数据落盘
-        spuInfoService.spuBigSaveAll(spuInfo);
         return Resp.ok(null);
     }
 

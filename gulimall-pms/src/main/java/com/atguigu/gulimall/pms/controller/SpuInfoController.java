@@ -35,6 +35,18 @@ public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
 
+    @ApiOperation("商品上架/下架")
+    @GetMapping("/updateStatus/{spuId}")
+    public Resp<Object> updateSpuStatus(
+
+            @RequestParam("status") Integer status,
+            @PathVariable("spuId") Long spuId){
+
+        spuInfoService.updateSpuStatus(spuId,status);
+        return Resp.ok(null);
+    }
+
+
     @GetMapping("/simple/search")
     public Resp<Object> querySpuInfoPage(
 
